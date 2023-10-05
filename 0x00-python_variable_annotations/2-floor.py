@@ -5,7 +5,7 @@
 import math
 
 
-def floor(n: float) -> float:
+def floor(n: float) -> int:
     '''Largest int not greater than x
     '''
     return math.floor(n)
