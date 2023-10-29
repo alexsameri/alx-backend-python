@@ -3,8 +3,8 @@ module for test
 """
 import unittest
 from parameterized import parameterized
-
 from utils import access_nested_map
+import requests
 
 
 class TestAccessNestedMap(unittest.TestCase):
