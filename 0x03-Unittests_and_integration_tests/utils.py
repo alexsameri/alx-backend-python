@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Generic utilities for github org client.
 """
+
 from functools import wraps
 from typing import (
     Mapping,
@@ -63,7 +64,7 @@ def memoize(fn: Callable) -> Callable:
     >>> my_object.a_method
     42
     """
-    attr_name = "_{}".format(fn.__name__)
+    attr_name = f"_{fn.__name__}"
 
     @wraps(fn)
     def memoized(self):
