@@ -1,39 +1,44 @@
-#!/usr/bin/env python3
-""" Module for testing utils """
 
+"""
+module for test
+"""
 import unittest
 from unittest.mock import patch
 from parameterized import parameterized
-from utils import (access_nested_map, get_json, memoize)
 import requests
+from utils import access_nested_map, get_json, memoize
+
 
 
 class TestAccessNestedMap(unittest.TestCase):
-    """ Class for Testing Access Nested Map """
-
+    """
+    testing the method to return an expected value
+    """
     @parameterized.expand([
-        ({"a": 1}, ("a",), 1),
-        ({"a": {"b": 2}}, ("a",), {'b': 2}),
-        ({"a": {"b": 2}}, ("a", "b"), 2)
+        ({"a": 1}, ("a", ), 1),
+        ({"a": {"b": 2}}, ("a",), {"b": 2}),
+        ({"a": {"b": 2}}, ("a", "b"), 2,)
     ])
-    def test_access_nested_map(self, nested_map, path, expected):
-        """ Test that the method returns what it is supposed to """
-        self.assertEqual(access_nested_map(nested_map, path), expected)
+    def test_access_nested_map(self, nested_map, path, expected_result):
+        """use assertEqual"""
+        self.assertEqual(access_nested_map(nested_map, path), expected_result)
 
     @parameterized.expand([
-        ({}, ("a",), 'a'),
+        ({}, ("a", ), 'a'),
         ({"a": 1}, ("a", "b"), 'b')
     ])
-    def test_access_nested_map_exception(self, nested_map, path, expected):
-        """ Test that a KeyError is raised for the respective inputs """
+    def test_access_nested_map_exception(self, nested_map, path, expected_result):
+        """
+        Use assertRaises to test that an exception is raised when the method is called.
+        """
         with self.assertRaises(KeyError) as e:
             access_nested_map(nested_map, path)
-        self.assertEqual(f"KeyError('{expected}')", repr(e.exception))
-
-
+        self.assertEqual(f"KeyError('{expected_result}')", repr(e.exception))
+        
 class TestGetJson(unittest.TestCase):
-    """ Class for Testing Get Json """
-
+    """
+    Class for testing the get_json method
+    """
     @parameterized.expand([
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False})
@@ -61,10 +66,12 @@ class TestMemoize(unittest.TestCase):
             """ Test Class for wrapping with memoize """
 
             def a_method(self):
+                """ Test Method for wrapping with memoize """
                 return 42
 
             @memoize
             def a_property(self):
+                """ Test Property for wrapping with memoize """
                 return self.a_method()
 
         with patch.object(TestClass, 'a_method') as mock:
@@ -72,3 +79,7 @@ class TestMemoize(unittest.TestCase):
             test_class.a_property()
             test_class.a_property()
             mock.assert_called_once()
+
+
+if __name__ == "__main__":
+    unittest.main()
