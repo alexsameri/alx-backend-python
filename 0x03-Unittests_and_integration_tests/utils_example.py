@@ -9,7 +9,6 @@ import requests
 from utils import access_nested_map, get_json, memoize
 
 
-
 class TestAccessNestedMap(unittest.TestCase):
     """
     testing the method to return an expected value
@@ -72,8 +71,8 @@ class TestMemoize(unittest.TestCase):
             @memoize
             def a_property(self):
                 """ Test Property for wrapping with memoize """
-                return self.a_method()
 
+                return self.a_method()
         with patch.object(TestClass, 'a_method') as mock:
             test_class = TestClass()
             test_class.a_property()
